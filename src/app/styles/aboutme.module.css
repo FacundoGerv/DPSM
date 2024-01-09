@@ -1,0 +1,30 @@
+.mainWrapper{
+    @apply w-full h-screen flex flex-col p-10 gap-10 justify-start items-center;
+}
+.contentItem{
+    @apply w-4/6 h-1/3 bg-gradient-radial from-gray-950 to-slate-900 
+    p-5 px-10 flex gap-10 items-center relative border-2 shadow-[box_0_0_.3rem_.1rem] shadow-gray-500 rounded-3xl;
+}
+.imageContainer{
+    @apply w-[12rem] h-[12rem] object-cover rounded-full opacity-100 overflow-hidden;
+}
+.textContainer{
+    @apply flex flex-col gap-3 w-9/12 p-2 overflow-y-scroll;
+    text-overflow: clip;
+    text-wrap: wrap;
+}
+.iconContainer{
+    @apply absolute right-3 bottom-3 flex gap-3 ;
+}
+.iconItem{
+    @apply bg-violet-200 rounded-full cursor-pointer object-cover flex justify-center items-center hover:scale-125;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: .1;
+}
+.iconItem:hover{
+   @apply border-2 border-violet-300;
+   opacity: 1;
+}
+
+

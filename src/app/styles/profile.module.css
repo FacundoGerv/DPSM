@@ -1,0 +1,75 @@
+.mainWrapper{
+    @apply p-5;
+}
+.mainContent{
+    @apply h-[80dvh] flex gap-10 justify-center p-5;
+}
+.mainTitle{
+    @apply w-full text-center max-h-[10%] my-2 px-2;
+}
+.previewWrapper{
+    @apply h-full flex flex-col gap-20;
+}
+.cardWrapper{
+    @apply flex flex-col gap-2 items-center;
+}
+.cardPreviewContent{
+    @apply flex gap-10;
+}
+.cardContainer{
+    @apply h-[45dvh] w-[18dvw] flex flex-col gap-3 p-3 items-center text-xl;
+    @apply bg-gradient-radial from-gray-400 to-gray-950;
+}
+.cardDesc{
+    @apply text-xl text-white;
+}
+.buttonContainer{
+    @apply w-full flex justify-center items-center flex-col gap-5;
+}
+.submitButton{
+    @apply text-white text-lg border-2 rounded-md w-2/6 bg-gray-900 px-3 py-1;
+}
+.formWrapper{
+    @apply w-3/12 h-full bg-gray-950 border-4 border-gray-600 flex justify-center items-center;
+}
+.formInner{
+    @apply w-[99%] h-[99%] p-4 flex flex-col;
+    @apply bg-gray-600;
+}
+.genInputContainer{
+    @apply w-full h-[10%] 2xl:h-[6dvh] flex flex-col items-start;
+}
+.genInputContainer label{
+    font-size: 2dvb;
+}
+.genInputContainer input{
+    @apply bg-gray-300 h-full w-full p-0 text-gray-950 pl-1;
+}
+.genInputContainer input::placeholder{
+    @apply text-gray-950 text-opacity-50;
+}
+.genInputContainer select{
+    @apply bg-gray-300 h-full text-gray-950 w-full p-0 pl-1;
+}
+.imageCard{
+    @apply  relative select-none flex justify-center p-0 object-cover;
+}
+.imageCard:hover{
+    @apply bg-gray-700 border-2 border-violet-500 text-white shadow-md;
+}
+.imageInput{
+    @apply w-full h-full absolute opacity-0 z-10 cursor-pointer;
+}
+.imageText{
+    @apply text-center opacity-0;
+}
+.imageCard:active{
+    opacity: 80%;
+    transform: scale(105%);
+}
+.imageCard:hover > .imageText{
+    @apply opacity-100;
+}
+.imageCard:hover > .redMark{
+    @apply opacity-0;
+}

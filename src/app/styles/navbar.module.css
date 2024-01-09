@@ -1,0 +1,96 @@
+.menuIcon {
+    @apply w-full h-10 z-50 bg-gray-900 flex justify-start items-center p-3 border-b;
+
+    /* media min-w 1024px */
+    @apply lg:hidden;
+}
+
+.menuIcon i {
+    @apply w-[5dvh] text-3xl;
+}
+
+.navWrapper {
+    @apply bg-white backdrop-blur-sm bg-opacity-10 z-40;
+    /* @apply hidden; */
+    animation: navBlurSlide 0.3s linear forwards;
+    animation-delay: .4s;
+
+    /* media min-w 1024px */
+    @apply lg:hidden;
+}
+
+.navList {
+    @apply bg-gray-900 z-50 overflow-hidden w-[60dvw] relative top-0 left-0 select-none border-r bg-opacity-75;
+    animation: navSlide .4s ease-in;
+    height: calc(100dvh - 2.5rem);
+
+
+    /* media min-w 1024px */
+    @apply lg:hidden;
+}
+
+.navItem {
+    @apply bg-slate-700 bg-opacity-50 p-2 mb-[.12rem];
+    animation: navItemSlide .7s ease-in forwards;
+    
+}
+.navItem:hover{
+   background-color: rgb(72, 62, 136);
+}
+.navItem span {
+    color: rgba(255, 255, 255, 0.2);
+    background-image: linear-gradient(90deg, rgb(72, 62, 136) 0%, rgba(255, 192, 203, 1) 100%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-clip: text;
+    animation: navItemSlide .7s ease-in forwards, 1s navItemColor linear .2s forwards;
+}
+
+.clicker {
+    @apply w-[40dvw] h-screen top-0 z-50 right-0 absolute;
+    /* @apply bg-red-500; */
+}
+
+@keyframes navSlide {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 60dvw;
+    }
+
+}
+
+@keyframes navItemSlide {
+    from {
+        opacity: 0;
+
+    }
+
+    to {
+        opacity: 1;
+
+    }
+}
+
+@keyframes navItemColor {
+    from {
+        background-size: 0% 100%;
+    }
+
+    to {
+        background-size: 100% 100%;
+    }
+
+}
+
+@keyframes navBlurSlide {
+    from {
+        width: 60dvw;
+    }
+
+    to {
+        width: 100dvw;
+    }
+}
