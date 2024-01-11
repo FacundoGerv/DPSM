@@ -11,7 +11,7 @@
 
 .navWrapper {
     @apply bg-white backdrop-blur-sm bg-opacity-10 z-40;
-    /* @apply hidden; */
+    @apply hidden;
     animation: navBlurSlide 0.3s linear forwards;
     animation-delay: .4s;
 
@@ -33,9 +33,6 @@
     @apply bg-slate-700 bg-opacity-50 p-2 mb-[.12rem];
     animation: navItemSlide .7s ease-in forwards;
     
-}
-.navItem:hover{
-   background-color: rgb(72, 62, 136);
 }
 .navItem span {
     color: rgba(255, 255, 255, 0.2);
