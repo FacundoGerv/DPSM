@@ -23,13 +23,9 @@ const inter = Inter({ subsets: ["latin"] });
 // "Auth" a lo que luego se va desplegar los contenidos visibles como el Navbar y como sibling vas a mostrar
 //cualquier children que se asigne al "RootLayout" como puede ser el Home, el Stock, el Perfil ...
 export default function RootLayout({ children }) {
-  const searchParams = useSearchParams();
-  const mode = searchParams.get('mode');
-
-
   return (
     <html lang="en">
-      <body className={`${mode === 'normal' ? '' : 'bg-gradient-to-br from-red-400 to-green-400'}`}>
+      <body>
         <AuthContextProvider>
           <Navbar />
           <div className='h-10 bg-transparent'></div>

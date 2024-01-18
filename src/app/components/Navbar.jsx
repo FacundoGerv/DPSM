@@ -60,6 +60,7 @@ const Navbar = () => {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <div className={styles.menuIcon} onClick={handleNavDropdown}>
         <i className="fa fa-thin fa-bars fa-2xl text-xl text-white"></i>
+        <span className={styles.menuTitle}>DPSM</span>
       </div>
       <div className={styles.navWrapper} id="navlist">
         <ul className={styles.navList}>

@@ -1,5 +1,5 @@
 .menuIcon {
-    @apply w-full h-10 z-50 bg-gray-900 flex justify-start items-center p-3 border-b;
+    @apply w-full h-10 z-50 bg-gray-900 gap-3 flex justify-start items-center p-3 border-b;
 
     /* media min-w 1024px */
     @apply lg:hidden;
@@ -7,6 +7,9 @@
 
 .menuIcon i {
     @apply w-[5dvh] text-3xl;
+}
+.menuTitle {
+    @apply font-bold text-[var(--primary70)];
 }
 
 .navWrapper {
@@ -36,7 +39,7 @@
 }
 .navItem span {
     color: rgba(255, 255, 255, 0.2);
-    background-image: linear-gradient(90deg, rgb(72, 62, 136) 0%, rgba(255, 192, 203, 1) 100%);
+    background-image: linear-gradient(90deg, var(--primary90) 0%, rgba(255, 192, 203, 1) 100%);
     background-repeat: no-repeat;
     background-size: 0% 100%;
     background-clip: text;

@@ -1,0 +1,44 @@
+.stockWrapper{
+    @apply grid gap-2 px-4;
+}
+.stockCard{
+    @apply border p-2 flex gap-2 bg-[var(--primary10)] shadow-sm shadow-gray-900 relative overflow-hidden;
+}
+.stockCard img {
+    @apply aspect-square h-[25dvh] object-cover rounded-sm;
+}
+.stockCardInfo{
+    @apply w-[60dvw] grid grid-flow-row overflow-scroll px-2 h-[20dvh] font-light;
+}
+.stockCardInfo aside:first-of-type{
+    @apply border-b sticky mb-2 font-semibold;
+}
+.activeAnimation:focus {
+    animation: favAnimation linear 1s;
+    animation-iteration-count: 1;
+}
+.activeAnimation:active {
+    animation: none;
+}
+.stockCardButtons{
+    @apply 
+        absolute right-0 bottom-0
+        h-[20%] w-[20%] m-4 
+        flex justify-center items-center 
+        bg-emerald-400 hover:bg-emerald-500 
+        cursor-pointer text-sm 
+        leading-none select-none;
+}
+
+@keyframes favAnimation {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform:
+         scale(160%)
+         rotate(180deg);
+    }
+  
+    
+}

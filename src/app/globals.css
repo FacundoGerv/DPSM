@@ -6,6 +6,26 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  /* main colors */
+  --primaryrgb: 139, 92, 246;
+  --main: 17, 24, 39;
+
+
+  /* primary opacity (lazy ass) */
+  --primary: rgba(var(--primaryrgb), 1);
+  --primary10: rgba(var(--primaryrgb), .1);
+  --primary20: rgba(var(--primaryrgb), .2);
+  --primary30: rgba(var(--primaryrgb), .3);
+  --primary40: rgba(var(--primaryrgb), .4);
+  --primary50: rgba(var(--primaryrgb), .5);
+  --primary60: rgba(var(--primaryrgb), .6);
+  --primary70: rgba(var(--primaryrgb), .7);
+  --primary80: rgba(var(--primaryrgb), .8);
+  --primary90: rgba(var(--primaryrgb), .9);
+
+  font-variant: small-caps;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,17 +38,17 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  background-repeat: no-repeat;
 }
-main{
+
+main {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
   width: 0;
 }
