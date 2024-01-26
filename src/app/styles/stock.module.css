@@ -5,10 +5,10 @@
     @apply border p-2 flex gap-2 bg-[var(--primary10)] shadow-sm shadow-gray-900 relative overflow-hidden;
 }
 .stockCard img {
-    @apply aspect-square h-[25dvh] object-cover rounded-sm;
+    @apply aspect-square h-[15dvh] place-self-center object-cover rounded-sm;
 }
 .stockCardInfo{
-    @apply w-[60dvw] grid grid-flow-row overflow-scroll px-2 h-[20dvh] font-light;
+    @apply w-[60dvw] grid grid-flow-row overflow-scroll px-2 h-[15dvh] font-light;
 }
 .stockCardInfo aside:first-of-type{
     @apply border-b sticky mb-2 font-semibold;
@@ -22,9 +22,10 @@
 }
 .stockCardButtons{
     @apply 
-        absolute right-0 bottom-0
-        h-[20%] w-[20%] m-4 
-        flex justify-center items-center 
+        absolute bottom-0
+        h-[1.5rem] w-full
+        flex justify-center items-center gap-1
+        bg-opacity-60 hover:bg-opacity-100
         bg-emerald-400 hover:bg-emerald-500 
         cursor-pointer text-sm 
         leading-none select-none;

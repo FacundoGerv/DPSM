@@ -1,5 +1,5 @@
 .menuIcon {
-    @apply w-full h-10 z-50 bg-gray-900 gap-3 flex justify-start items-center p-3 border-b;
+    @apply w-full h-[5dvh] z-50 bg-gray-900 gap-3 flex justify-start items-center p-3 border-b;
 
     /* media min-w 1024px */
     @apply lg:hidden;
@@ -38,6 +38,7 @@
     
 }
 .navItem span {
+    font-size: larger;
     color: rgba(255, 255, 255, 0.2);
     background-image: linear-gradient(90deg, var(--primary90) 0%, rgba(255, 192, 203, 1) 100%);
     background-repeat: no-repeat;
@@ -50,7 +51,12 @@
     @apply w-[40dvw] h-screen top-0 z-50 right-0 absolute;
     /* @apply bg-red-500; */
 }
-
+.navDivLine{
+    @apply w-full py-3 px-4 text-center;
+}
+.navInnerLine{
+    @apply border-t;
+}
 @keyframes navSlide {
     from {
         width: 0;
@@ -94,3 +100,6 @@
         width: 100dvw;
     }
 }
+
+
+

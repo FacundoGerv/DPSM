@@ -4,7 +4,8 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import firebaseApp from '@/app/firebase';
-import styles from '@/app/styles/navbar.module.css'
+import styles from '@/app/styles/navbar.module.css';
+import wide from '@/app/styles/navbarwide.module.css';
 
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const { user, googleSignIn, logOut } = UserAuth();
   const router = useRouter();
-
+  const categories = ['autos', 'motos', 'celulares', 'pitos de goma', 'yo que se']
   const handleSignIn = async () => {
     try {
       await googleSignIn();
@@ -58,6 +59,49 @@ const Navbar = () => {
   return (
     <div className='fixed w-full z-50'>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+
+      <div className={wide.navWrapper}>
+        <ul className={wide.navbarContainer}>
+          <Link href={`/`}>
+            <li className={`${pathname === '/' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
+              <span>Home</span>
+            </li>
+          </Link>
+          <Link href={`/products`}>
+            <li className={`${pathname === '/products' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
+              <span>Productos</span>
+            </li>
+          </Link>
+          <Link href={`/favorites`}>
+            <li className={`${pathname === '/favorites' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
+              <span>Home</span>
+            </li>
+          </Link>
+        </ul>
+        <div>
+          {pathname === '/products' && (
+
+            <ul className="w-full bg-emerald-400 flex gap-3 p-1" >
+              {categories.map((cat) => (
+                <>
+                  <li className="bg-yellow-500">
+                    {cat}
+                  </li>
+                </>
+              ))}
+
+            </ul>
+          )}
+        </div>
+      </div>
+
+
+
+
+
+
+
       <div className={styles.menuIcon} onClick={handleNavDropdown}>
         <i className="fa fa-thin fa-bars fa-2xl text-xl text-white"></i>
         <span className={styles.menuTitle}>DPSM</span>
@@ -69,8 +113,8 @@ const Navbar = () => {
               <span>Home</span>
             </li>
           </Link>
-          <Link href={`/stock`} onClick={hideNav}>
-            <li className={`${pathname === '/stock' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
+          <Link href={`/products`} onClick={hideNav}>
+            <li className={`${pathname === '/products' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
               <span>Productos</span>
             </li>
           </Link>
@@ -81,9 +125,41 @@ const Navbar = () => {
               </li>
             </Link>
           )}
-          <ul className="absolute bottom-0 w-full">
+          <ul className="absolute bottom-2 w-full">
+            <div className={styles.navDivLine}>
+              <span>Administrar Página</span>
+              <div className={styles.navInnerLine}></div>
+            </div>
             {user ? (
               <>
+                <Link href={`/editpage`} onClick={hideNav}>
+                  <li className={`${styles.navItem}`}>
+                    <span>
+                      Añadir Producto
+                    </span>
+                  </li>
+                </Link>
+                <Link href={`/editpage`} onClick={hideNav}>
+                  <li className={`${styles.navItem}`}>
+                    <span>
+                      Control Stock
+                    </span>
+                  </li>
+                </Link>
+                <Link href={`/editpage`} onClick={hideNav}>
+                  <li className={`${styles.navItem}`}>
+                    <span>
+                      Administrar Usuarios
+                    </span>
+                  </li>
+                </Link>
+                <Link href={`/editpage`} onClick={hideNav}>
+                  <li className={`${styles.navItem} ${pathname === '/editpage' ? 'bg-violet-800 bg-opacity-60' : ''}`}>
+                    <span>
+                      Editar Página
+                    </span>
+                  </li>
+                </Link>
                 <li className={`${styles.navItem} bg-red-400 bg-opacity-20`} onClick={handleSignOut}>
                   <span>
                     Cerrar Sesión
@@ -97,12 +173,6 @@ const Navbar = () => {
                 </li>
               </>
             )}
-            <li className={`${styles.navItem} bg-violet-300 bg-opacity-20`} onClick={()=>{
-              console.log(user)
-              .catch((e) => {console.error(e)})
-            }}>
-              <span>Test</span>
-            </li>
           </ul>
         </ul>
         <div className={styles.clicker} onClick={handleNavDropdown}>

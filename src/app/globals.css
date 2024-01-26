@@ -24,7 +24,7 @@
   --primary80: rgba(var(--primaryrgb), .8);
   --primary90: rgba(var(--primaryrgb), .9);
 
-  font-variant: small-caps;
+  /* font-variant: small-caps; */
 
 }
 

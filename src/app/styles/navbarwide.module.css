@@ -1,0 +1,8 @@
+.navWrapper{
+    @apply hidden lg:block;
+}
+@media (min-width: 1024px) {
+    .navbarContainer{
+        @apply h-[8dvh] w-full bg-red-500 flex gap-2 items-center;
+    }
+}

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getDocs, collection, getFirestore, arrayUnion, updateDoc, doc, arrayRemove} from 'firebase/firestore';
+import { getDocs, collection, getFirestore, arrayUnion, updateDoc, doc, arrayRemove } from 'firebase/firestore';
 import firebaseApp from '@/app/firebase';
 import Link from 'next/link';
 import { UserAuth } from '@/app/context/AuthContext';
@@ -17,23 +17,16 @@ const StockPage = () => {
             try {
                 const { id, votes } = product;
                 const userHasVoted = votes && votes.includes(user.uid);
-    
-                const updatedProducts = [...products]; // Create a copy of the products array
+                const updatedProducts = [...products];
                 const productIndex = updatedProducts.findIndex((p) => p.id === id);
-    
                 if (productIndex !== -1) {
-                    // Update the local copy of the product
                     updatedProducts[productIndex] = {
                         ...product,
                         votes: userHasVoted
                             ? votes.filter((vote) => vote !== user.uid)
-                            : votes ? [...votes, user.uid] : [user.uid], // Add user.uid if votes exist, otherwise create a new array
+                            : votes ? [...votes, user.uid] : [user.uid],
                     };
-    
-                    // Update the state with the modified array
                     setProducts(updatedProducts);
-    
-                    // Update the Firestore document
                     const userRef = doc(db, 'genCollection', id);
                     await updateDoc(userRef, {
                         votes: userHasVoted
@@ -59,7 +52,6 @@ const StockPage = () => {
             });
             setProducts(productsData);
         };
-
         fetchData();
     }, []);
 
@@ -70,11 +62,18 @@ const StockPage = () => {
                 {products.map((product) => (
                     product.image && (
                         <div key={product.id} className={styles.stockCard}>
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                className={styles.stockCardImage}
-                            />
+                            <div className='relative'>
+
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className={styles.stockCardImage}
+                                />
+                                <div className={styles.stockCardButtons}>
+                                    <i className="fa fa-brands fa-whatsapp fa-lg"></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                            </div>
                             <div className={styles.stockCardInfo}>
 
                                 <aside className='flex justify-between'>
@@ -94,10 +93,7 @@ const StockPage = () => {
                                 <span>{product.name}</span>
                                 <span>{product.price}</span>
                             </div>
-                            <div className={styles.stockCardButtons}>
-                                <i className="fa fa-brands fa-whatsapp fa-lg"></i>
-                                <span>WhatsApp</span>
-                            </div>
+
                         </div>
                     )
                 ))}
