@@ -14,7 +14,8 @@ const Navbar = () => {
   const pathname = usePathname();
   const { user, googleSignIn, logOut } = UserAuth();
   const router = useRouter();
-  const categories = ['autos', 'motos', 'celulares', 'pitos de goma', 'yo que se']
+  const categories = ['IPhone', 'Macbooks', 'AirPods', 'Fundas', 'Cargadores', 'Apple Watch', 'Samsung', 'Motorola', 'Xiaomi']
+  categories.sort();
   const handleSignIn = async () => {
     try {
       await googleSignIn();
@@ -64,33 +65,53 @@ const Navbar = () => {
       <div className={wide.navWrapper}>
         <ul className={wide.navbarContainer}>
           <Link href={`/`}>
-            <li className={`${pathname === '/' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
+            <li className={`${pathname === '/' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem} hover:bg-[var(--primary10)]`}>
               <span>Home</span>
             </li>
           </Link>
-          <Link href={`/products`}>
-            <li className={`${pathname === '/products' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
-              <span>Productos</span>
+          {pathname !== '/products' ? (
+              <Link href={`/products`}>
+                <li className={`${pathname === '/products' ? 'bg-[var(--primary30)]' : ''} ${styles.navItem} hover:bg-[var(--primary10)]`}>
+                  <span>Productos</span>
+                </li>
+              </Link>
+            ) : (
+              <li className={`${pathname === '/products' ? 'bg-[var(--primary30)]' : '' } ${styles.navItem} hover:bg-[var(--primary10)]`}>
+              <span>Categorias</span>
             </li>
-          </Link>
+            )}
           <Link href={`/favorites`}>
-            <li className={`${pathname === '/favorites' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem}`}>
-              <span>Home</span>
+            <li className={`${pathname === '/favorites' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem} hover:bg-[var(--primary10)]`}>
+              <span>Favoritos</span>
             </li>
           </Link>
+          {!user ? (
+
+            <li className={`${styles.navItem} absolute right-0 top-0 hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={handleSignIn}>
+              <span>Iniciar Sesión</span>
+            </li>
+          ) : (
+            <li className={`${styles.navItem} absolute right-0 top-0 hover:bg-red-500 hover:bg-opacity-20 cursor-pointer px-5`} onClick={handleSignOut}>
+            <span>Cerrar Sesión</span>
+              </li>
+          )}
+          
         </ul>
         <div>
-          {pathname === '/products' && (
+              {pathname === '/products' && (
 
-            <ul className="w-full bg-emerald-400 flex gap-3 p-1" >
+                <ul className="w-[100dvw] overflow-hidden bg-black border-b border-t border-violet-800 border-opacity-60 flex relative justify-center gap-3" >
               {categories.map((cat) => (
-                <>
-                  <li className="bg-yellow-500">
+                <li className=" hover:bg-slate-500  border-violet-800 border-opacity-60 px-3 cursor-pointer whitespace-nowrap">
                     {cat}
                   </li>
-                </>
               ))}
+              {categories.length > 15 && (
 
+                <li className=" hover:bg-slate-500 border-l border-violet-800 border-opacity-60 bg-black border-r px-3 cursor-pointer absolute right-0">
+                  ver más...
+                </li>
+                  )}
             </ul>
           )}
         </div>
