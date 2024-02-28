@@ -1,14 +1,15 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import { useContext, createContext, useState, useEffect, use } from "react";
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/app/firebase"; 
 import firebaseApp from '@/app/firebase';
-import { updateDoc, setDoc, doc, getFirestore, collection } from 'firebase/firestore'
+import { updateDoc, setDoc, doc, getFirestore, collection, getDoc } from 'firebase/firestore'
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const db = getFirestore(firebaseApp)
+  const db = getFirestore(firebaseApp);
+  const [accCheck, setAccCheck] = useState(Boolean);
 
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -36,16 +37,34 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const registerUserInFirestore = (user) => {
-    setDoc(doc(db, 'users', user.uid), {   
-      displayName: user.displayName,
-      email: user.email,
-      isAdmin: false,
-    }).then(() => {
-      console.log("Usuario registrado en Firestore:", user.uid);
-    }).catch((error) => {
-      console.error("Error al registrar el usuario en Firestore:", error.message);
-    });
+  const registerUserInFirestore = async (user) => {
+    try {
+      const userRef = doc(db, 'users', user?.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.data() === undefined){
+        setAccCheck(false);
+      }else{
+        setAccCheck(true);
+      }
+    } catch (error) {
+      console.warn(error.message);
+    }
+      
+
+    if (accCheck) {
+      setDoc(doc(db, 'users', user.uid), {   
+        displayName: user.displayName,
+        email: user.email,
+        isAdmin: false,
+      }).then(() => {
+        console.log("Usuario registrado en Firestore:", user.uid);
+      }).catch((error) => {
+        console.error("Error al registrar el usuario en Firestore:", error.message);
+      });
+    } else {
+      console.log("Usuario ya registrado");
+    }
+    
   };
 
   return (
