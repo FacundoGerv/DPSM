@@ -41,30 +41,24 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const userRef = doc(db, 'users', user?.uid);
       const userSnap = await getDoc(userRef);
-      if (userSnap.data() === undefined){
-        setAccCheck(false);
-      }else{
-        setAccCheck(true);
+      if (userSnap.data() === undefined) {
+        setDoc(doc(db, 'users', user.uid), {
+          displayName: user.displayName,
+          email: user.email,
+          isAdmin: false,
+        })
+          .then(() => {
+            console.log("Usuario registrado en Firestore:", user.uid);
+          })
+          .catch((error) => {
+            console.error("Error al registrar el usuario en Firestore:", error.message);
+          });
+      } else {
+        console.warn("Usuario ya Registrado.");
       }
     } catch (error) {
       console.warn(error.message);
     }
-      
-
-    if (accCheck) {
-      setDoc(doc(db, 'users', user.uid), {   
-        displayName: user.displayName,
-        email: user.email,
-        isAdmin: false,
-      }).then(() => {
-        console.log("Usuario registrado en Firestore:", user.uid);
-      }).catch((error) => {
-        console.error("Error al registrar el usuario en Firestore:", error.message);
-      });
-    } else {
-      console.log("Usuario ya registrado");
-    }
-    
   };
 
   return (

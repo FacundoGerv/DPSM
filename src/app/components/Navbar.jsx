@@ -66,22 +66,30 @@ const Navbar = () => {
         const userRef = doc(db, 'users', user?.uid);
         const querySnapshot = await getDoc(userRef);
         if (querySnapshot.exists()) {
-          // Verifica si el documento existe
           setUserMeta(querySnapshot.data()); 
-          console.log("correo: ", userMeta.email);
+          console.log("Usuario: ", userMeta.displayName);
         } else {
-          console.warn("El usuario no se encuentra en la base de datos.");
+          console.error("El usuario no se encuentra en la base de datos.");
         }
       }catch(e){
-        console.warn("User not found in the database.")
+        console.warn("User not found in the database.", e.message)
       }
     };
 
     fetchData();
   }, [user]);
-  
-  const test = () => {
-    console.log(userMeta.email);
+
+  let adminMenu = document.getElementById('adminMenu');
+
+  const handleAdminMenu = () => {
+      try {
+        adminMenu = document.getElementById('adminMenu');
+        adminMenu.style.display === 'flex' ? adminMenu.style.display = 'none' : adminMenu.style.display = 'flex';
+      }
+      catch (e) {
+        adminMenu = document.getElementById('navlist');
+        console.log(e);
+      }
   }
   return (
     <div className='fixed w-full z-50'>
@@ -97,22 +105,25 @@ const Navbar = () => {
           </Link>
           {pathname !== '/products' ? (
             <Link href={`/products`}>
-              <li className={`${pathname === '/products' ? 'bg-[var(--primary30)]' : ''} ${styles.navItem} hover:bg-[var(--primary10)]`}>
+              <li className={`${pathname === '/products' ? 'bg-[var(--primary30)]' : ''} ${styles.navItem} hover:bg-[var(--primary10)] px-3`}>
                 <span>Productos</span>
               </li>
             </Link>
           ) : (
-            <li className={`${pathname === '/products' ? 'bg-[var(--primary30)]' : ''} ${styles.navItem} hover:bg-[var(--primary10)]`}>
+            <li className={`${pathname === '/products' ? 'bg-[var(--primary30)]' : ''} ${styles.navItem} hover:bg-[var(--primary10)] px-3`}>
               <span>Categorias</span>
             </li>
           )}
-          <Link href={`/favorites`}>
-            <li className={`${pathname === '/favorites' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem} hover:bg-[var(--primary10)]`}>
+          {user && (
+
+            <Link href={`/favorites`}>
+            <li className={`${pathname === '/favorites' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem} hover:bg-[var(--primary10)] px-3`}>
               <span>Favoritos</span>
             </li>
           </Link>
+            )}
           {!user ? (
-            <li className={`${styles.navItem}  top-0 hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={handleSignIn}>
+            <li className={`${styles.navItem}  absolute right-0 top-0 hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={handleSignIn}>
               <span>Iniciar Sesión</span>
             </li>
           ) : (
@@ -121,9 +132,9 @@ const Navbar = () => {
                 <li>
                   <span>Bienvenido, {user?.displayName}!</span>
                 </li>
-                {userMeta.isAdmin ? (
+                {userMeta.isAdmin && userMeta !== undefined ? (
 
-                  <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={test}>
+                  <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer select-none`} onClick={handleAdminMenu}>
                     <span>Menu</span>
                   </li>
                 ) : (
@@ -132,20 +143,25 @@ const Navbar = () => {
                   </li>
                 )}
               </ul>
-              <ul className="flex flex-col absolute right-0 top-12 z-50">
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={handleSignIn}>
+              {userMeta.isAdmin && userMeta !== undefined && (
+
+                <ul className=" flex-col absolute right-0 top-12 z-50 hidden select-none" id="adminMenu">
+                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`}>
                   <span>Administrar Stock</span>
                 </li>
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={handleSignIn}>
+                <Link href={`/editpage`}>
+                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`}>
                   <span>Administrar Pagina</span>
                 </li>
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={handleSignIn}>
+                </Link>
+                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`}>
                   <span>Administrar Usuarios</span>
                 </li>
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`} onClick={handleSignOut}>
+                <li className={`${styles.navItem}  hover:bg-red-400 hover:bg-opacity-20 px-5 cursor-pointer`} onClick={handleSignOut}>
                   <span>Cerrar Sesion</span>
                 </li>
               </ul>
+                )}   
 
             </>
           )}

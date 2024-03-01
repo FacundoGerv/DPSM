@@ -3,6 +3,6 @@
 }
 @media (min-width: 1024px) {
     .navbarContainer{
-        @apply w-full bg-slate-800 flex items-center relative;
+        @apply w-full bg-slate-800 flex items-center relative gap-1;
     }
 }

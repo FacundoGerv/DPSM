@@ -64,7 +64,7 @@ const StockPage = () => {
     }, []);
     const userFavoriteProducts = products.filter((product) => product.votes && product.votes.includes(user?.uid));
     return (
-        <>
+      
             <main className={styles.stockWrapper}>
             {userFavoriteProducts.length === 0 && (
                 <div className='w-full text-center text-white'>
@@ -106,7 +106,7 @@ const StockPage = () => {
                     )
                 ))}
             </main>
-        </>
+ 
     );
 };
 
