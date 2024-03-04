@@ -18,7 +18,6 @@ const Navbar = () => {
   const router = useRouter();
   const categories = ['IPhone', 'Macbooks', 'AirPods', 'Fundas', 'Cargadores', 'Apple Watch', 'Samsung', 'Motorola', 'Xiaomi']
   categories.sort();
-  const isAdmin = true;
   const handleSignIn = async () => {
     try {
       await googleSignIn();
@@ -62,7 +61,6 @@ const Navbar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try{
-
         const userRef = doc(db, 'users', user?.uid);
         const querySnapshot = await getDoc(userRef);
         if (querySnapshot.exists()) {
@@ -146,17 +144,22 @@ const Navbar = () => {
               {userMeta.isAdmin && userMeta !== undefined && (
 
                 <ul className=" flex-col absolute right-0 top-12 z-50 hidden select-none" id="adminMenu">
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`}>
+                
+                <Link href={`/editstock`}>
+                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer ${pathname === '/editstock' ? 'bg-[var(--primary30)]' : ''} `}>
                   <span>Administrar Stock</span>
                 </li>
-                <Link href={`/editpage`}>
+                </Link>
+                <Link href={`/usercontrol`}>
                 <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`}>
                   <span>Administrar Pagina</span>
                 </li>
                 </Link>
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`}>
+                <Link href={`/usercontrol`}>
+                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer ${pathname === '/usercontrol' ? 'bg-[var(--primary30)]' : ''} `}>
                   <span>Administrar Usuarios</span>
                 </li>
+                </Link>
                 <li className={`${styles.navItem}  hover:bg-red-400 hover:bg-opacity-20 px-5 cursor-pointer`} onClick={handleSignOut}>
                   <span>Cerrar Sesion</span>
                 </li>
@@ -231,29 +234,29 @@ const Navbar = () => {
             </div>
             {user ? (
               <>
-                <Link href={`/editpage`} onClick={hideNav}>
+                <Link href={`/usercontrol`} onClick={hideNav}>
                   <li className={`${styles.navItem}`}>
                     <span>
                       Añadir Producto
                     </span>
                   </li>
                 </Link>
-                <Link href={`/editpage`} onClick={hideNav}>
+                <Link href={`/usercontrol`} onClick={hideNav}>
                   <li className={`${styles.navItem}`}>
                     <span>
                       Control Stock
                     </span>
                   </li>
                 </Link>
-                <Link href={`/editpage`} onClick={hideNav}>
+                <Link href={`/usercontrol`} onClick={hideNav}>
                   <li className={`${styles.navItem}`}>
                     <span>
                       Administrar Usuarios
                     </span>
                   </li>
                 </Link>
-                <Link href={`/editpage`} onClick={hideNav}>
-                  <li className={`${styles.navItem} ${pathname === '/editpage' ? 'bg-violet-800 bg-opacity-60' : ''}`}>
+                <Link href={`/usercontrol`} onClick={hideNav}>
+                  <li className={`${styles.navItem} ${pathname === '/usercontrol' ? 'bg-violet-800 bg-opacity-60' : ''}`}>
                     <span>
                       Editar Página
                     </span>
@@ -266,13 +269,13 @@ const Navbar = () => {
                 </li>
               </>
             ) : (
-              <>
+              
                 <li className={`${styles.navItem} bg-violet-300 bg-opacity-20`} onClick={handleSignIn}>
                   <span>
                     Iniciar Sesión
                   </span>
                 </li>
-              </>
+              
             )}
           </ul>
         </ul>

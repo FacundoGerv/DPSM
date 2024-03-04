@@ -56,7 +56,7 @@ const StockPage = () => {
     }, []);
 
     return (
-        <>
+
             <main className={styles.stockWrapper}>
 
                 {products.map((product) => (
@@ -98,7 +98,7 @@ const StockPage = () => {
                     )
                 ))}
             </main>
-        </>
+
     );
 };
 
