@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { getDocs, collection, getFirestore, arrayUnion, updateDoc, doc, arrayRemove } from 'firebase/firestore';
 import firebaseApp from '@/app/firebase';
-import Link from 'next/link';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { UserAuth } from '@/app/context/AuthContext';
 import styles from '@/app/styles/stock.module.css';
 
@@ -11,6 +11,9 @@ const StockPage = () => {
     const [products, setProducts] = useState([]);
     const { user } = UserAuth();
     const db = getFirestore(firebaseApp);
+    const searchParams = useSearchParams();
+
+    const categoryFilter = searchParams.get('category');
 
     const handleFav = async (product) => {
         if (user) {
@@ -55,49 +58,51 @@ const StockPage = () => {
         fetchData();
     }, []);
 
+
+    const selectCategory = categoryFilter ?
+    products.filter(product => product.category && product.category.includes(categoryFilter)) :
+    products;
+
+
     return (
+        <main className={styles.stockWrapper}>
+            {selectCategory.map((product) => (
+                product.id && (
+                    <div key={product.id} className={styles.stockCard}>
+                        <div className='relative'>
 
-            <main className={styles.stockWrapper}>
-
-                {products.map((product) => (
-                    product.image && (
-                        <div key={product.id} className={styles.stockCard}>
-                            <div className='relative'>
-
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className={styles.stockCardImage}
-                                />
-                                <div className={styles.stockCardButtons}>
-                                    <i className="fa fa-brands fa-whatsapp fa-lg"></i>
-                                    <span>WhatsApp</span>
-                                </div>
+                            <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                className={styles.stockCardImage}
+                            />
+                            <div className={styles.stockCardButtons}>
+                                <i className="fa fa-brands fa-whatsapp fa-lg"></i>
+                                <span>WhatsApp</span>
                             </div>
-                            <div className={styles.stockCardInfo}>
-
-                                <aside className='flex justify-between'>
-                                    <span>
-                                        {product.name}
-                                    </span>
-                                    <span onClick={() => handleFav(product)}>
-                                        {product.votes.length}
-                                        <i tabIndex='0' className={`fa fa-star ml-1 ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
-                                    </span>
-                                </aside>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.price}</span>
-                            </div>
-
                         </div>
-                    )
-                ))}
-            </main>
+                        <div className={styles.stockCardInfo}>
+
+                            <aside className='flex justify-between overflow-hidden'>
+                                <span>
+                                    {product.title}
+                                </span>
+                                <span>{product.category}</span>
+                                <span onClick={() => handleFav(product)}>
+                                    {product.votes.length}
+                                    <i tabIndex='0' className={`fa fa-star ml-1 ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
+                                </span>
+                            </aside>
+                            <p className='bg-slate-800 bg-opacity-20 w-[30dvw] h-[15dvh] p-1 break-words'>
+                                {product.description}
+                            </p>
+                            <span>${product.price}</span>
+                        </div>
+
+                    </div>
+                )
+            ))}
+        </main>
 
     );
 };

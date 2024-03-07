@@ -1,11 +1,12 @@
 import { addDoc, collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { UserAuth } from "../context/AuthContext";
 import firebaseApp from '@/app/firebase';
 import styles from '@/app/styles/navbar.module.css';
 import wide from '@/app/styles/navbarwide.module.css';
+import path from "path";
 
 
 const Navbar = () => {
@@ -16,7 +17,21 @@ const Navbar = () => {
   const { user, googleSignIn, logOut } = UserAuth();
   const db = getFirestore(firebaseApp);
   const router = useRouter();
-  const categories = ['IPhone', 'Macbooks', 'AirPods', 'Fundas', 'Cargadores', 'Apple Watch', 'Samsung', 'Motorola', 'Xiaomi']
+ 
+
+  const createQueryString = useCallback(
+    (value) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set('category', value)
+ 
+      return params.toString()
+    },
+    [searchParams]
+  )
+
+  const categoryFilter = searchParams.get('category');
+
+  const categories = ['iPhone', 'Macbooks', 'AirPods', 'Fundas', 'Apple Watch', 'Samsung', 'Motorola', 'Xiaomi']
   categories.sort();
   const handleSignIn = async () => {
     try {
@@ -35,7 +50,10 @@ const Navbar = () => {
     }
   };
 
-  var logindwn = document.getElementById('navlist');
+  let logindwn = null;
+  if (typeof document !== 'undefined') {
+    logindwn = document.getElementById('navlist');
+  }
 
   const handleNavDropdown = () => {
     try {
@@ -77,7 +95,10 @@ const Navbar = () => {
     fetchData();
   }, [user]);
 
-  let adminMenu = document.getElementById('adminMenu');
+  let adminMenu = null;
+  if (typeof document !== 'undefined') {
+    adminMenu = document.getElementById('adminMenu');
+  }
 
   const handleAdminMenu = () => {
       try {
@@ -150,9 +171,9 @@ const Navbar = () => {
                   <span>Administrar Stock</span>
                 </li>
                 </Link>
-                <Link href={`/usercontrol`}>
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer`}>
-                  <span>Administrar Pagina</span>
+                <Link href={`/addproduct`}>
+                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer ${pathname === '/addproduct' ? 'bg-[var(--primary30)]' : ''} `}>
+                  <span>Añadir productos</span>
                 </li>
                 </Link>
                 <Link href={`/usercontrol`}>
@@ -175,7 +196,14 @@ const Navbar = () => {
 
             <ul className="w-[100dvw] overflow-hidden bg-black border-b border-t border-violet-800 border-opacity-60 flex relative justify-center gap-3" >
               {categories.map((cat) => (
-                <li className=" hover:bg-slate-500  border-violet-800 border-opacity-60 px-3 cursor-pointer whitespace-nowrap">
+                <li 
+                className={`${categoryFilter === cat ? 'bg-slate-400' : ''} hover:bg-slate-500  border-violet-800 border-opacity-60 px-3 cursor-pointer whitespace-nowrap`}
+                onClick={() => {
+                  categoryFilter === cat ? 
+                  router.push(pathname)
+                  : 
+                  router.push(pathname + '?' + createQueryString(`${cat}`))
+                }}>
                   {cat}
                 </li>
               ))}

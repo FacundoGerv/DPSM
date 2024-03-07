@@ -62,7 +62,7 @@ const EditStock = () => {
                                     $ {product.price}
                                 </li>
                                 <li className="w-[15dvw]">
-                                    {product.votes.length} ★
+                                    {product.votes?.length} ★
                                 </li>
                                 <li className="w-[15dvw]">
                                     {product.id}

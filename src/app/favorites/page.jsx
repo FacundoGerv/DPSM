@@ -72,7 +72,7 @@ const StockPage = () => {
                 </div>
             )}
                 {userFavoriteProducts.map((product) => (
-                    product.image && (
+                    product.id && (
                         <div key={product.id} className={styles.stockCard}>
                             <img
                                 src={product.image}
@@ -83,20 +83,14 @@ const StockPage = () => {
 
                                 <aside className='flex justify-between'>
                                     <span>
-                                        {product.name}
+                                        {product.title}
                                     </span>
                                     <span onClick={() => handleFav(product)}>
                                         {product.votes.length}
                                         <i tabIndex='0' className={`fa fa-star ml-1 ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
                                     </span>
                                 </aside>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.name}</span>
-                                <span>{product.price}</span>
+                                <p className='w-1/2 bg-red-300'>{product.description}</p>
                             </div>
                             <div className={styles.stockCardButtons}>
                                 <i className="fa fa-brands fa-whatsapp fa-lg"></i>
