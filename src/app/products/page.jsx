@@ -60,8 +60,8 @@ const StockPage = () => {
 
 
     const selectCategory = categoryFilter ?
-    products.filter(product => product.category && product.category.includes(categoryFilter)) :
-    products;
+        products.filter(product => product.category && product.category.includes(categoryFilter)) :
+        products;
 
 
     return (
@@ -71,15 +71,11 @@ const StockPage = () => {
                     <div key={product.id} className={styles.stockCard}>
                         <div className='relative'>
 
-                            <img 
+                            <img
                                 src={product.imageUrl}
                                 alt={product.name}
                                 className={styles.stockCardImage}
                             />
-                            <div className={styles.stockCardButtons}>
-                                <i className="fa fa-brands fa-whatsapp fa-lg"></i>
-                                <span>WhatsApp</span>
-                            </div>
                         </div>
                         <div className={styles.stockCardInfo}>
 
@@ -87,16 +83,22 @@ const StockPage = () => {
                                 <span>
                                     {product.title}
                                 </span>
-                                <span>{product.category}</span>
                                 <span onClick={() => handleFav(product)}>
                                     {product.votes.length}
                                     <i tabIndex='0' className={`fa fa-star ml-1 ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
                                 </span>
                             </aside>
-                            <p className='bg-slate-800 bg-opacity-20 w-[30dvw] h-[15dvh] p-1 break-words'>
+                            <p className='bg-violet-500 bg-opacity-10 h-[15dvh] p-1 break-words overflow-scroll'>
                                 {product.description}
+
                             </p>
-                            <span>${product.price}</span>
+                            <div className=' bg-violet-500 bg-opacity-10 text-lg font-normal flex items-center justify-center group select-none cursor-pointer hover:bg-green-600'  onClick={() => {alert("Aca iria la api de wsp si tuviese una")}}>
+                                <span className='group-hover:hidden'>${product.price}</span>
+                                <div className='hidden group-hover:flex gap-2 items-center justify-center'>
+                                    <i className="fa fa-brands fa-whatsapp fa-lg "></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

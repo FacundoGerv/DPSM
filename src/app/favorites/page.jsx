@@ -96,7 +96,7 @@ const FavPage = () => {
                                     <i tabIndex='0' className={`fa fa-star ml-1 ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
                                 </span>
                             </aside>
-                            <p className='bg-slate-800 bg-opacity-20 w-[30dvw] h-[15dvh] p-1 break-words'>
+                            <p className='bg-slate-800 overflow-scroll bg-opacity-20 w-[30dvw] h-[15dvh] p-1 break-words'>
                                 {product.description}
                             </p>
                             <span>${product.price}</span>

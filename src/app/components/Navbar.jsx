@@ -197,17 +197,20 @@ const Navbar = () => {
         <div>
           {pathname === '/products' && (
 
-            <ul className="w-[100dvw] overflow-hidden bg-black  border-t border-violet-800 border-opacity-60 flex relative justify-center gap-3" >
+            <ul className="w-[100dvw] overflow-hidden bg-black  border-t border-violet-800 border-opacity-60 flex relative justify-center gap-3 py-1 select-none" >
               {categories.map((cat) => (
                 <li 
-                className={`${categoryFilter === cat ? 'border-b-2 border-violet-300 text-violet-400 bg-white bg-opacity-5' : 'border-b'} hover:border-slate-500 hover:bg-white hover:bg-opacity-[3%] rounded-md border-violet-800 border-opacity-60 px-3 cursor-pointer whitespace-nowrap`}
+                className={`${categoryFilter === cat ? 'border-b-2 border-violet-500 group text-violet-400 bg-white bg-opacity-5 hover:bg-opacity-30 hover:bg-red-400 rounded-md px-3 cursor-pointer whitespace-nowrap flex items-center justify-center gap-2 ' :
+                 'border-b hover:border-slate-500 hover:bg-white hover:bg-opacity-[3%] rounded-md border-violet-800 border-opacity-60 px-3 cursor-pointer whitespace-nowrap'} `}
                 onClick={() => {
                   categoryFilter === cat ? 
                   router.push(pathname)
                   : 
                   router.push(pathname + '?' + createQueryString(`${cat}`))
                 }}>
-                  {cat}
+                  <span className="flex justify-start gap-2">{cat}<span className="hidden group-hover:block text-black ">⨯</span></span>
+                 
+                  
                 </li>
               ))}
               {categories.length > 15 && (

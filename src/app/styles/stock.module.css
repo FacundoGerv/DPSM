@@ -8,7 +8,7 @@
     @apply aspect-square w-[25dvw] place-self-center object-cover rounded-sm;
 }
 .stockCardInfo{
-    @apply w-[50dvw] grid grid-flow-row px-2 h-[25dvh] font-light;
+    @apply w-[50dvw] grid grid-flow-row px-2 pb-2 font-light bg-white bg-opacity-5;
 }
 .stockCardInfo aside:first-of-type{
     @apply border-b sticky mb-2 font-semibold;
