@@ -64,48 +64,47 @@ const FavPage = () => {
     }, []);
     const userFavoriteProducts = products.filter((product) => product.votes && product.votes.includes(user?.uid));
     return (
-      
-            <main className={styles.stockWrapper}>
-            {userFavoriteProducts.length === 0 && (
-                <div className='w-full text-center text-white'>
-                    <span>Aun no has marcado ninguna publicación como Favorita</span>
-                </div>
-            )}
-                {userFavoriteProducts.map((product) => (
-                    product.id && (
-                        <div key={product.id} className={styles.stockCard}>
+        <main className={styles.stockWrapper}>
+            {userFavoriteProducts.map((product) => (
+                product.id && (
+                    <div key={product.id} className={styles.stockCard}>
                         <div className='relative'>
-                            <img 
+
+                            <img
                                 src={product.imageUrl}
                                 alt={product.name}
                                 className={styles.stockCardImage}
                             />
-                            <div className={styles.stockCardButtons}>
-                                <i className="fa fa-brands fa-whatsapp fa-lg"></i>
-                                <span>WhatsApp</span>
-                            </div>
                         </div>
                         <div className={styles.stockCardInfo}>
+
                             <aside className='flex justify-between overflow-hidden'>
-                                <span>
+                                <span className='pl-1 pt-1'>
                                     {product.title}
                                 </span>
-                                <span>{product.category}</span>
-                                <span onClick={() => handleFav(product)}>
+                                <span className=' cursor-pointer select-none' onClick={() => handleFav(product)}>
                                     {product.votes.length}
-                                    <i tabIndex='0' className={`fa fa-star ml-1 ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
+                                    <i tabIndex='0' className={`fa fa-star ml-1  ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
                                 </span>
                             </aside>
-                            <p className='bg-slate-800 overflow-scroll bg-opacity-20 w-[30dvw] h-[15dvh] p-1 break-words'>
+                            <p className='bg-violet-500 bg-opacity-10 h-[15dvh] p-1 break-words overflow-scroll'>
                                 {product.description}
+
                             </p>
-                            <span>${product.price}</span>
+                            <div className=' bg-violet-500 bg-opacity-10 text-lg font-normal flex items-center justify-center group select-none cursor-pointer hover:bg-green-600'  onClick={() => {alert("Aca iria la api de wsp si tuviese una")}}>
+                                <span className='group-hover:hidden'>${product.price}</span>
+                                <div className='hidden group-hover:flex gap-2 items-center justify-center'>
+                                    <i className="fa fa-brands fa-whatsapp fa-lg "></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    )
-                ))}
-            </main>
- 
+                )
+            ))}
+        </main>
+
     );
 };
 

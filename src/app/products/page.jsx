@@ -80,12 +80,12 @@ const StockPage = () => {
                         <div className={styles.stockCardInfo}>
 
                             <aside className='flex justify-between overflow-hidden'>
-                                <span>
+                                <span className='pl-1 pt-1'>
                                     {product.title}
                                 </span>
-                                <span onClick={() => handleFav(product)}>
+                                <span className=' cursor-pointer select-none' onClick={() => handleFav(product)}>
                                     {product.votes.length}
-                                    <i tabIndex='0' className={`fa fa-star ml-1 ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
+                                    <i tabIndex='0' className={`fa fa-star ml-1  ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
                                 </span>
                             </aside>
                             <p className='bg-violet-500 bg-opacity-10 h-[15dvh] p-1 break-words overflow-scroll'>
