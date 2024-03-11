@@ -71,7 +71,7 @@ const StockPage = () => {
                     <div key={product.id} className={styles.stockCard}>
                         <div className='relative'>
 
-                            <img
+                            <img 
                                 src={product.imageUrl}
                                 alt={product.name}
                                 className={styles.stockCardImage}

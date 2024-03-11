@@ -136,7 +136,7 @@ const Navbar = () => {
           {user && (
 
             <Link href={`/favorites`}>
-            <li className={`${pathname === '/favorites' ? 'bg-violet-800 bg-opacity-60' : ''} ${styles.navItem} hover:bg-[var(--primary10)] px-3`}>
+            <li className={`${pathname === '/favorites' ? 'bg-[var(--primary30)]' : ''} ${styles.navItem} hover:bg-[var(--primary10)] px-3`}>
               <span>Favoritos</span>
             </li>
           </Link>
@@ -164,24 +164,27 @@ const Navbar = () => {
               </ul>
               {userMeta.isAdmin && userMeta !== undefined && (
 
-                <ul className=" flex-col absolute right-0 top-12 z-50 hidden select-none" id="adminMenu">
+                <ul className=" flex-col absolute right-0 top-12 z-50 hidden select-none bg-slate-800" id="adminMenu">
                 
-                <Link href={`/editstock`}>
+                <Link href={`/editstock`} onClick={handleAdminMenu}>
                 <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer ${pathname === '/editstock' ? 'bg-[var(--primary30)]' : ''} `}>
                   <span>Administrar Stock</span>
                 </li>
                 </Link>
-                <Link href={`/addproduct`}>
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer ${pathname === '/addproduct' ? 'bg-[var(--primary30)]' : ''} `}>
+                <Link href={`/addproduct`} onClick={handleAdminMenu}>
+                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] hover:bg-opacity-30 px-5 cursor-pointer ${pathname === '/addproduct' ? 'bg-[var(--primary30)]' : ''} `}>
                   <span>Añadir productos</span>
                 </li>
                 </Link>
-                <Link href={`/usercontrol`}>
+                <Link href={`/usercontrol`} onClick={handleAdminMenu}>
                 <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer ${pathname === '/usercontrol' ? 'bg-[var(--primary30)]' : ''} `}>
                   <span>Administrar Usuarios</span>
                 </li>
                 </Link>
-                <li className={`${styles.navItem}  hover:bg-red-400 hover:bg-opacity-20 px-5 cursor-pointer`} onClick={handleSignOut}>
+                <li className={`${styles.navItem}  hover:bg-red-400 hover:bg-opacity-20  px-5 cursor-pointer`} onClick={() => {
+                  handleAdminMenu();
+                  handleSignOut();
+                }} >
                   <span>Cerrar Sesion</span>
                 </li>
               </ul>
@@ -194,10 +197,10 @@ const Navbar = () => {
         <div>
           {pathname === '/products' && (
 
-            <ul className="w-[100dvw] overflow-hidden bg-black border-b border-t border-violet-800 border-opacity-60 flex relative justify-center gap-3" >
+            <ul className="w-[100dvw] overflow-hidden bg-black  border-t border-violet-800 border-opacity-60 flex relative justify-center gap-3" >
               {categories.map((cat) => (
                 <li 
-                className={`${categoryFilter === cat ? 'bg-slate-400' : ''} hover:bg-slate-500  border-violet-800 border-opacity-60 px-3 cursor-pointer whitespace-nowrap`}
+                className={`${categoryFilter === cat ? 'border-b-2 border-violet-300 text-violet-400 bg-white bg-opacity-5' : 'border-b'} hover:border-slate-500 hover:bg-white hover:bg-opacity-[3%] rounded-md border-violet-800 border-opacity-60 px-3 cursor-pointer whitespace-nowrap`}
                 onClick={() => {
                   categoryFilter === cat ? 
                   router.push(pathname)

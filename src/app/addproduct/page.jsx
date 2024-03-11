@@ -4,9 +4,30 @@ import firebaseApp, { storage } from '@/app/firebase';
 import { updateDoc, doc, getFirestore, collection, getDocs, getDoc, addDoc } from 'firebase/firestore';
 import { UserAuth } from "../context/AuthContext";
 import { ref, storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { Progress, CheckCircleOutlined, CloseCircleOutlined } from "antd";
+
+
+const CheckboxButton = ({ label, value, checked, onChange, className }) => (
+    <label className={className}>
+        <input
+            type="checkbox"
+            className="hidden"
+            value={value}
+            checked={checked}
+            onChange={onChange}
+        />
+        <span className="text-slate-300 text-center flex justify-center">{label}</span>
+    </label>
+);
 
 const AddProduct = () => {
     const { user } = UserAuth();
+    const twoColors = {
+        '0%': '#108ee9',
+        '100%': '#87d068',
+    };
+    const successIcon = <CheckCircleOutlined style={{ color: '#52c41a' }} />;
+    const errorIcon = <CloseCircleOutlined style={{ color: '#ff4d4f' }} />;
     const [productName, setProductName] = useState('');
     const [productCat, setProductCat] = useState('');
     const [productPrice, setProductPrice] = useState('');
@@ -14,7 +35,7 @@ const AddProduct = () => {
     const [imageFile, setImageFile] = useState(null);
     const [progressUpload, setProgressUpload] = useState(0);
     const [imagePreview, setImagePreview] = useState('');
-    const categories = ['iPhone', 'Macbooks', 'AirPods', 'Fundas', 'Apple Watch', 'Samsung', 'Motorola', 'Xiaomi']
+    const categories = ['iPhone', 'Macbooks', 'AirPods', 'Fundas', 'Apple Watch', 'Samsung', 'Motorola', 'Xiaomi', 'Cargadores']
     categories.sort();
     const db = getFirestore(firebaseApp);
     const handleAddProduct = async () => {
@@ -110,53 +131,38 @@ const AddProduct = () => {
     }
 
 
+
     return (
-        <main className="w-full bg-slate-600 bg-opacity-30 flex justify-center pt-3 items-center flex-col">
-            <span className="flex text- font-medium text-slate-300">
+        <main className="relative w-full h-screen bg-slate-800 bg-opacity-30 flex justify-start pt-20 items-center flex-col !m-0">
+
+            <span className="flex text-2xl text-slate-300 absolute top-5">
                 Agregar producto
             </span>
-            <label className="flex flex-col p-2 gap-2 bg-red-300 w-[20dvw]">
-                <input className="border-slate-200 placeholder-slate-400 text-slate-900 "
+            <label className="flex flex-col p-2 gap-2 ring-2 ring-violet-400 ring-opacity-60">
+                <input className=" px-1 border-slate-200 placeholder-slate-400 text-slate-900 "
                     type="text"
                     placeholder="Nombre del producto"
                     value={productName}
                     onChange={(e) => setProductName(e.target.value)} />
-                <input className="border-slate-200 placeholder-slate-400 text-slate-900"
+                <input className="px-1 border-slate-200 placeholder-slate-400 text-slate-900"
                     type="text"
                     placeholder="Precio"
                     value={productPrice}
                     onChange={(e) => setProductPrice(e.target.value)} />
-                <div  className="grid grid-flow-row grid-cols-3 items-center justify-between">
+                <div className="grid grid-flow-row grid-cols-3 gap-3 items-center justify-between">
                     {categories.map((cat) => (
-                     <label className="flex gap-2 items-center whitespace-nowrap">
-                        <input className="border-slate-200 placeholder-slate-400 text-slate-900"
-                            type="checkbox"
-                            placeholder="Categoria"
-                            value={productCat}
-                            onChange={(e) => setProductCat(`${cat}`)} />
-                        <span>
-                            {cat}
-                        </span>
-                    </label>
-                    
-                    
-                    
-                    
+                        <CheckboxButton
+                            className={`${productCat === cat ? 'border-b-2 border-violet-400' : ''} cursor-pointer select-none border-b-2 whitespace-nowrap`}
+                            key={cat}
+                            label={cat}
+                            value={cat}
+                            checked={productCat === cat}
+                            onChange={() => setProductCat(cat)}
+                        />
                     ))}
-                   
-                    <label className="flex gap-2 items-center ">
-                        <input className="border-slate-200 placeholder-slate-400 text-slate-900"
-                            type="checkbox"
-                            placeholder="Categoria"
-                            value={productCat}
-                            onChange={(e) => setProductCat("AirPods")} />
-                        <span>
-                            AirPods
-                        </span>
-                    </label>
-                    
+
                 </div>
-                <textarea className="border-slate-200 placeholder-slate-400 text-slate-900"
+                <textarea className="h-[10dvh] resize-none px-1 border-slate-200 placeholder-slate-400 text-slate-900"
                     placeholder="Descripción del producto"
                     value={productDescription}
                     onChange={(e) => setProductDescription(e.target.value)} />
@@ -184,9 +190,26 @@ const AddProduct = () => {
                     onClick={handleAddProduct}>
                     Agregar Producto
                 </button>
-                {progressUpload > 0 && (
-                    <progress value={progressUpload} max="100" />
-                )}
+                <div className="w-[105%] h-4 mt-2 items-center justify-end flex pl-1">
+                    <Progress
+                        format={(percent) => percent != 100 ? (<span style={{ color: '#fff' }}>{percent}%</span>
+                        ) : (
+                            <div 
+                            className="border border-emerald-200 rounded-full w-5 bg-emerald-300 bg-opacity-80 aspect-square flex items-center justify-center overflow-hidden">
+                                <span 
+                                className="text-black font-extrabold"
+                                >
+                                    ✓
+                                </span>
+                            </div>
+                        )}
+                        percent={progressUpload}
+                        max="100"
+                        trailColor="rgba(255, 255, 255 , .05)"
+                        strokeColor={twoColors}
+                    />
+                </div>
+
             </label>
         </main>
     );

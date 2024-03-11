@@ -47,7 +47,7 @@ const EditStock = () => {
                 <div className="w-full bg-slate-600 bg-opacity-30 overflow-hidden">
                     <ul className="grid grid-flow-row w-full">
                         <ul className="flex gap-x-10  w-full border-b px-10 bg-slate-500 bg-opacity-50">
-                            <li className="w-[15dvw]">Titulo</li>
+                            <li className="w-[25dvw]">Titulo</li>
                             <li className="w-[15dvw]">Precio</li>
                             <li className="w-[15dvw]">Favoritos</li>
                             <li className="w-[15dvw]">Id del Producto</li>
@@ -55,7 +55,7 @@ const EditStock = () => {
                         </ul>
                         {products.map((product) => (
                             <ul className="flex gap-x-10  w-full border-b px-10 hover:bg-slate-500" key={product.id}>
-                                <li className="w-[15dvw]">
+                                <li className="w-[25dvw] whitespace-nowrap">
                                     {product.title}
                                 </li>
                                 <li className="w-[15dvw]">
