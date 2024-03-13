@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDocs, collection, getFirestore, arrayUnion, updateDoc, doc, arrayRemove } from 'firebase/firestore';
 import firebaseApp from '@/app/firebase';
-import Link from 'next/link';
 import { UserAuth } from '@/app/context/AuthContext';
 import styles from '@/app/styles/stock.module.css';
 
@@ -65,6 +64,11 @@ const FavPage = () => {
     const userFavoriteProducts = products.filter((product) => product.votes && product.votes.includes(user?.uid));
     return (
         <main className={styles.stockWrapper}>
+            {userFavoriteProducts.length === 0 && (
+                <div className='w-[100dvw] absolute left-0 flex justify-center'>
+                    <span className=' text-lg'>No tiene favoritos seleccionados</span>
+                </div>
+            )}
             {userFavoriteProducts.map((product) => (
                 product.id && (
                     <div key={product.id} className={styles.stockCard}>
@@ -77,21 +81,20 @@ const FavPage = () => {
                             />
                         </div>
                         <div className={styles.stockCardInfo}>
-
                             <aside className='flex justify-between overflow-hidden'>
                                 <span className='pl-1 pt-1'>
                                     {product.title}
                                 </span>
                                 <span className=' cursor-pointer select-none' onClick={() => handleFav(product)}>
                                     {product.votes.length}
-                                    <i tabIndex='0' className={`fa fa-star ml-1  ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
+                                    <i  className={`fa fa-star ml-1  ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
                                 </span>
                             </aside>
                             <p className='bg-violet-500 bg-opacity-10 h-[15dvh] p-1 break-words overflow-scroll'>
                                 {product.description}
 
                             </p>
-                            <div className=' bg-violet-500 bg-opacity-10 text-lg font-normal flex items-center justify-center group select-none cursor-pointer hover:bg-green-600'  onClick={() => {alert("Aca iria la api de wsp si tuviese una")}}>
+                            <div className=' bg-violet-500 bg-opacity-10 text-lg font-normal flex items-center justify-center group select-none cursor-pointer hover:bg-green-600' onClick={() => { alert("Aca iria la api de wsp si tuviese una") }}>
                                 <span className='group-hover:hidden'>${product.price}</span>
                                 <div className='hidden group-hover:flex gap-2 items-center justify-center'>
                                     <i className="fa fa-brands fa-whatsapp fa-lg "></i>

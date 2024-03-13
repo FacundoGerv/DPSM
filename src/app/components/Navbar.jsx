@@ -171,11 +171,6 @@ const Navbar = () => {
                   <span>Administrar Stock</span>
                 </li>
                 </Link>
-                <Link href={`/addproduct`} onClick={handleAdminMenu}>
-                <li className={`${styles.navItem}  hover:bg-[var(--primary20)] hover:bg-opacity-30 px-5 cursor-pointer ${pathname === '/addproduct' ? 'bg-[var(--primary30)]' : ''} `}>
-                  <span>Añadir productos</span>
-                </li>
-                </Link>
                 <Link href={`/usercontrol`} onClick={handleAdminMenu}>
                 <li className={`${styles.navItem}  hover:bg-[var(--primary20)] px-5 cursor-pointer ${pathname === '/usercontrol' ? 'bg-[var(--primary30)]' : ''} `}>
                   <span>Administrar Usuarios</span>

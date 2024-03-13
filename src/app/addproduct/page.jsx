@@ -134,7 +134,7 @@ const AddProduct = () => {
 
     return (
         <main className="relative w-full h-screen bg-slate-800 bg-opacity-30 flex justify-start pt-20 items-center flex-col !m-0">
-
+            
             <span className="flex text-2xl text-slate-300 absolute top-5">
                 Agregar producto
             </span>

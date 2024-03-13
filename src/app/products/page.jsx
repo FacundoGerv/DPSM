@@ -1,11 +1,10 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { getDocs, collection, getFirestore, arrayUnion, updateDoc, doc, arrayRemove } from 'firebase/firestore';
-import firebaseApp from '@/app/firebase';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { UserAuth } from '@/app/context/AuthContext';
+import firebaseApp from '@/app/firebase';
 import styles from '@/app/styles/stock.module.css';
-
+import { arrayRemove, arrayUnion, collection, doc, getDocs, getFirestore, updateDoc } from 'firebase/firestore';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const StockPage = () => {
     const [products, setProducts] = useState([]);
@@ -46,6 +45,14 @@ const StockPage = () => {
         }
     };
 
+    const handleWhatsApp = (product) => {
+        const message = `¡Hola! Estoy interesado en el producto: ${product.title}, con precio $:${product.price}. ¿Podrías darme más información?`;
+        const phoneNumber = '2604677605'; 
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappWebUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+    
+        window.open(whatsappWebUrl, '_blank');
+    };
     useEffect(() => {
         const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, 'genCollection'));
@@ -58,11 +65,9 @@ const StockPage = () => {
         fetchData();
     }, []);
 
-
     const selectCategory = categoryFilter ?
         products.filter(product => product.category && product.category.includes(categoryFilter)) :
         products;
-
 
     return (
         <main className={styles.stockWrapper}>
@@ -70,7 +75,6 @@ const StockPage = () => {
                 product.id && (
                     <div key={product.id} className={styles.stockCard}>
                         <div className='relative'>
-
                             <img
                                 src={product.imageUrl}
                                 alt={product.name}
@@ -78,7 +82,6 @@ const StockPage = () => {
                             />
                         </div>
                         <div className={styles.stockCardInfo}>
-
                             <aside className='flex justify-between overflow-hidden'>
                                 <span className='pl-1 pt-1'>
                                     {product.title}
@@ -90,9 +93,8 @@ const StockPage = () => {
                             </aside>
                             <p className='bg-violet-500 bg-opacity-10 h-[15dvh] p-1 break-words overflow-scroll'>
                                 {product.description}
-
                             </p>
-                            <div className=' bg-violet-500 bg-opacity-10 text-lg font-normal flex items-center justify-center group select-none cursor-pointer hover:bg-green-600'  onClick={() => {alert("Aca iria la api de wsp si tuviese una")}}>
+                            <div className=' bg-violet-500 bg-opacity-10 text-lg font-normal flex items-center justify-center group select-none cursor-pointer hover:bg-green-600' onClick={() => handleWhatsApp(product)}>
                                 <span className='group-hover:hidden'>${product.price}</span>
                                 <div className='hidden group-hover:flex gap-2 items-center justify-center'>
                                     <i className="fa fa-brands fa-whatsapp fa-lg "></i>
@@ -100,12 +102,10 @@ const StockPage = () => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 )
             ))}
         </main>
-
     );
 };
 
