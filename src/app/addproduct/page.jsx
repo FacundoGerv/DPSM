@@ -133,12 +133,12 @@ const AddProduct = () => {
 
 
     return (
-        <main className="relative w-full h-screen bg-slate-800 bg-opacity-30 flex justify-start pt-20 items-center flex-col !m-0">
+        <main className="overflow-y-scroll overscroll-contain relative w-full h-[95.8dvh] bg-slate-800 bg-opacity-30 flex justify-start pt-20 items-center flex-col !m-0">
             
             <span className="flex text-2xl text-slate-300 absolute top-5">
                 Agregar producto
             </span>
-            <label className="flex flex-col p-2 gap-2 ring-2 ring-violet-400 ring-opacity-60">
+            <label className="w-[20dvw] flex flex-col p-2 gap-2 ring-2 ring-violet-400 ring-opacity-60">
                 <input className=" px-1 border-slate-200 placeholder-slate-400 text-slate-900 "
                     type="text"
                     placeholder="Nombre del producto"
@@ -167,16 +167,16 @@ const AddProduct = () => {
                     value={productDescription}
                     onChange={(e) => setProductDescription(e.target.value)} />
                 {!imagePreview ? (
-                    <button className=" bg-violet-700 border cursor-pointer text-center" onClick={handleImageClick}>Agregar imagen</button>
+                    <button className="hover:border-2 bg-opacity-30 bg-violet-700 border cursor-pointer text-center" onClick={handleImageClick}>Agregar imagen</button>
                 ) : (
                     <>
                         <div className="flex gap-2 w-full">
-                            <button className=" bg-violet-700 border cursor-pointer text-center w-1/2" onClick={handleImageClick}>Cambiar Imagen</button>
-                            <button className=" bg-red-400 border cursor-pointer text-center w-1/2" onClick={handleImageDelete}>Eliminar Imagen</button>
+                            <button className="bg-opacity-30 hover:border-2 bg-violet-700 border cursor-pointer text-center w-1/2" onClick={handleImageClick}>Cambiar Imagen</button>
+                            <button className="bg-opacity-30 hover:border-2 bg-red-400 border cursor-pointer text-center w-1/2" onClick={handleImageDelete}>Eliminar Imagen</button>
                         </div>
                         <img
                             src={imagePreview}
-                            className="aspect-square object-cover"
+                            className="w-full aspect-square object-cover"
                             id="image-preview"
                             alt={imageFile?.name} />
                     </>
@@ -186,7 +186,7 @@ const AddProduct = () => {
                     onChange={(event) => handleSelectedFile(event.target.files)}
                     id="fileInput"
                     className="hidden" />
-                <button className=" bg-violet-700 border cursor-pointer text-center"
+                <button className="bg-opacity-60 hover:border-2 hover:border-emerald-500 bg-green-400 border cursor-pointer text-center"
                     onClick={handleAddProduct}>
                     Agregar Producto
                 </button>

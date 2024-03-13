@@ -91,9 +91,9 @@ const StockPage = () => {
                                     <i tabIndex='0' className={`fa fa-star ml-1  ${product.votes && product.votes.includes(user?.uid) ? `text-orange-400` : ``}`}></i>
                                 </span>
                             </aside>
-                            <p className='bg-violet-500 bg-opacity-10 h-[15dvh] p-1 break-words overflow-scroll'>
+                            <textarea className='bg-violet-500 bg-opacity-10 h-[15dvh] p-1 break-words overflow-scroll'>
                                 {product.description}
-                            </p>
+                            </textarea>
                             <div className=' bg-violet-500 bg-opacity-10 text-lg font-normal flex items-center justify-center group select-none cursor-pointer hover:bg-green-600' onClick={() => handleWhatsApp(product)}>
                                 <span className='group-hover:hidden'>${product.price}</span>
                                 <div className='hidden group-hover:flex gap-2 items-center justify-center'>
