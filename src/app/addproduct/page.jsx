@@ -1,10 +1,9 @@
 "use client";
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import firebaseApp, { storage } from '@/app/firebase';
-import { updateDoc, doc, getFirestore, collection, getDocs, getDoc, addDoc } from 'firebase/firestore';
-import { UserAuth } from "../context/AuthContext";
-import { ref, storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { Progress, CheckCircleOutlined, CloseCircleOutlined } from "antd";
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { Progress } from "antd";
 
 
 const CheckboxButton = ({ label, value, checked, onChange, className }) => (
@@ -21,13 +20,10 @@ const CheckboxButton = ({ label, value, checked, onChange, className }) => (
 );
 
 const AddProduct = () => {
-    const { user } = UserAuth();
     const twoColors = {
         '0%': '#108ee9',
         '100%': '#87d068',
     };
-    const successIcon = <CheckCircleOutlined style={{ color: '#52c41a' }} />;
-    const errorIcon = <CloseCircleOutlined style={{ color: '#ff4d4f' }} />;
     const [productName, setProductName] = useState('');
     const [productCat, setProductCat] = useState('');
     const [productPrice, setProductPrice] = useState('');
@@ -99,6 +95,8 @@ const AddProduct = () => {
             setProductDescription('');
             setImageFile(null);
             setProgressUpload(0);
+            setProductCat('');
+            setImagePreview('');
 
             alert('Producto agregado correctamente');
         } catch (error) {
@@ -134,7 +132,7 @@ const AddProduct = () => {
 
     return (
         <main className="overflow-y-scroll overscroll-contain relative w-full h-[95.8dvh] bg-slate-800 bg-opacity-30 flex justify-start pt-20 items-center flex-col !m-0">
-            
+
             <span className="flex text-2xl text-slate-300 absolute top-5">
                 Agregar producto
             </span>
@@ -194,10 +192,10 @@ const AddProduct = () => {
                     <Progress
                         format={(percent) => percent != 100 ? (<span style={{ color: '#fff' }}>{percent}%</span>
                         ) : (
-                            <div 
-                            className="border border-emerald-200 rounded-full w-5 bg-emerald-300 bg-opacity-80 aspect-square flex items-center justify-center overflow-hidden">
-                                <span 
-                                className="text-black font-extrabold"
+                            <div
+                                className="border border-emerald-200 rounded-full w-5 bg-emerald-300 bg-opacity-80 aspect-square flex items-center justify-center overflow-hidden">
+                                <span
+                                    className="text-black font-extrabold"
                                 >
                                     ✓
                                 </span>
